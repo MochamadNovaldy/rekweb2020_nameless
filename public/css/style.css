@@ -1,0 +1,14 @@
+.navbar {
+    background-color: black !important;
+}
+
+.about {
+    background-color: black !important;
+}
+
+.footer {
+    background-color: black !important;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+}
