@@ -2,49 +2,50 @@
 
 namespace App\Controllers;
 
-use App\Models\AdminModel;
+use App\Models\ProductModel;
 
 class Admin extends BaseController
 {
-    protected $adminModel;
+    protected $productModel;
 
     public function __construct()
     {
-        $this->adminModel = new AdminModel();
+        $this->productModel = new ProductModel();
     }
 
     public function index()
     {
-        $currentPage = $this->request->getVar('page_admin') ? $this->request->getVar('page_admin') : 1;
+        $currentPage = $this->request->getVar('page_product') ? $this->request->getVar('page_product') : 1;
 
         $keyword = $this->request->getVar('keyword');
         if ($keyword) {
-            $admin = $this->adminModel->search($keyword);
+            $product = $this->productModel->search($keyword);
         } else {
-            $admin = $this->adminModel;
+            $product = $this->productModel;
         }
 
         $data = [
-            'admin' => $admin->paginate(10, 'admin'),
-            'pager' => $this->adminModel->pager,
+            // 'product' => $this->productModel->findAll(),
+            'product' => $product->paginate(10, 'product'),
+            'pager' => $this->productModel->pager,
             'currentPage' => $currentPage
         ];
 
         // cara connect db dengan model
-        return view('admin/index', $data);
+        return view('admin/product/product', $data);
     }
 
-    public function create()
+    public function addProduct()
     {
         // session();
         $data = [
             'validation' => \Config\Services::validation()
         ];
 
-        return view('admin/create', $data);
+        return view('/admin/product/addProduct', $data);
     }
 
-    public function save()
+    public function saveProduct()
     {
         // validasi input
         if (!$this->validate([
@@ -66,7 +67,7 @@ class Admin extends BaseController
         ])) {
             // $validation = \Config\Services::validation();
             // return redirect()->to('/komik/create')->withInput()->with('validation', $validation);
-            return redirect()->to('/admin/create')->withInput();
+            return redirect()->to('/admin/product/addProduct')->withInput();
         }
 
         // ambil gambar
@@ -82,7 +83,7 @@ class Admin extends BaseController
         }
 
         $slug = url_title($this->request->getVar('type'), '-', true);
-        $this->adminModel->save([
+        $this->productModel->save([
             'brand' => $this->request->getVar('brand'),
             'type' => $this->request->getVar('type'),
             'slug' => $slug,
@@ -99,36 +100,36 @@ class Admin extends BaseController
         return redirect()->to('/admin');
     }
 
-    public function delete($id)
-    {
-        // cari berdasarkan id
-        $admin = $this->adminModel->find($id);
-
-        // cek jika file gambarnya default
-        if ($admin['image'] != 'sampul_default.jpg') {
-            // hapus gambar
-            unlink('img/' . $admin['image']);
-        }
-
-        $this->adminModel->delete($id);
-        session()->setFlashdata('pesan', 'Produk berhasil dihapus.');
-        return redirect()->to('/admin');
-    }
-
     public function edit($slug)
     {
         $data = [
             'validation' => \Config\Services::validation(),
-            'admin' => $this->adminModel->getAdmin($slug)
+            'product' => $this->productModel->getProduct($slug)
         ];
 
-        return view('admin/edit', $data);
+        return view('admin/product/editProduct', $data);
+    }
+    
+    public function delete($id)
+    {
+        //cari berdasarkan id
+        $product = $this->productModel->find($id);
+
+        //cek jika file gambarnya default
+        if ($product['image'] != 'sampul_default.jpg') {
+            //hapus gambar
+            unlink('img/' . $product['image']);
+        }
+
+        $this->productModel->delete($id);
+        session()->setFlashdata('pesan', 'Produk berhasil dihapus');
+        return redirect()->to('/admin');
     }
 
     public function update($id)
     {
         // cek judul
-        $tipeLama = $this->adminModel->getAdmin($this->request->getVar('slug'));
+        $tipeLama = $this->productModel->getProduct($this->request->getVar('slug'));
         if ($tipeLama['type'] == $this->request->getVar('type')) {
             $rule_judul = 'required';
         } else {
@@ -152,7 +153,7 @@ class Admin extends BaseController
                 ]
             ]
         ])) {
-            return redirect()->to('/admin/edit/' . $this->request->getVar('slug'))->withInput();
+            return redirect()->to('/admin/product/editProduct/' . $this->request->getVar('slug'))->withInput();
         }
 
         $fileGambar = $this->request->getFile('image');
@@ -173,7 +174,7 @@ class Admin extends BaseController
 
         // agar sampul_default.jpg tidak terhapus
         $slug = url_title($this->request->getVar('type'), '-', true);
-        $this->adminModel->save([
+        $this->productModel->save([
             'id' => $id,
             'brand' => $this->request->getVar('brand'),
             'type' => $this->request->getVar('type'),
@@ -189,5 +190,15 @@ class Admin extends BaseController
         session()->setFlashdata('pesan', 'Produk berhasil diubah.');
 
         return redirect()->to('/admin');
+    }
+
+    public function users()
+    {
+        $data = [
+            'product' => $this->productModel->findAll(),
+        ];
+
+        // cara connect db dengan model
+        return view('admin/users/users', $data);
     }
 }

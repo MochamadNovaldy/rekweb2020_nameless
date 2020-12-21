@@ -2,31 +2,31 @@
 
 namespace App\Controllers;
 
-use App\Models\PagesModel;
+use App\Models\ProductModel;
 
 class Pages extends BaseController
 {
-    protected $pagesModel;
+    protected $productModel;
 
     public function __construct()
     {
-        $this->pagesModel = new PagesModel();
+        $this->productModel = new ProductModel();
     }
 
     public function index()
     {
-        $currentPage = $this->request->getVar('page_home') ? $this->request->getVar('page_home') : 1;
+        $currentPage = $this->request->getVar('page_product') ? $this->request->getVar('page_product') : 1;
 
         $keyword = $this->request->getVar('keyword');
         if ($keyword) {
-            $pages = $this->pagesModel->search($keyword);
+            $product = $this->productModel->search($keyword);
         } else {
-            $pages = $this->pagesModel;
+            $product = $this->productModel;
         }
 
         $data = [
-            'pages' => $pages->paginate(3, 'admin'),
-            'pager' => $this->pagesModel->pager,
+            'product' => $product->paginate(3, 'admin'),
+            'pager' => $this->productModel->pager,
             'currentPage' => $currentPage
         ];
 

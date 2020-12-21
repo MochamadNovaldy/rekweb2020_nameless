@@ -7,7 +7,7 @@ use CodeIgniter\Model;
 class ProductModel extends Model
 {
     protected $table = 'product';
-    protected $allowedFields = ['brand', 'type'];
+    protected $allowedFields = ['brand', 'type', 'slug', 'price', 'os', 'storage', 'cpu', 'ram', 'image'];
 
     public function search($keyword)
     {
