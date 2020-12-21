@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 15, 2020 at 07:10 AM
+-- Generation Time: Dec 17, 2020 at 06:04 AM
 -- Server version: 10.4.14-MariaDB
 -- PHP Version: 7.4.10
 
@@ -112,7 +112,10 @@ INSERT INTO `auth_logins` (`id`, `ip_address`, `email`, `user_id`, `date`, `succ
 (11, '::1', 'ridha10af@gmail.com', 4, '2020-12-14 00:31:50', 1),
 (12, '::1', 'ridha10af@gmail.com', 4, '2020-12-14 05:06:44', 1),
 (13, '::1', 'ridha10af@gmail.com', 4, '2020-12-14 07:44:29', 1),
-(14, '::1', 'ridha10af@gmail.com', 4, '2020-12-15 00:06:57', 1);
+(14, '::1', 'ridha10af@gmail.com', 4, '2020-12-15 00:06:57', 1),
+(15, '::1', 'ridha10af@gmail.com', 4, '2020-12-16 20:39:06', 1),
+(16, '::1', 'ridha10af@gmail.com', 4, '2020-12-16 22:23:55', 1),
+(17, '::1', 'ridha10af@gmail.com', 4, '2020-12-16 22:25:34', 1);
 
 -- --------------------------------------------------------
 
@@ -154,13 +157,6 @@ CREATE TABLE `auth_tokens` (
   `user_id` int(11) UNSIGNED NOT NULL,
   `expires` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `auth_tokens`
---
-
-INSERT INTO `auth_tokens` (`id`, `selector`, `hashedValidator`, `user_id`, `expires`) VALUES
-(3, 'bcb59b95ab82936f7a1264d1', '8d721260338303dc27a353eb2f533807d27f4498ce510767f7082537062fed70', 4, '2021-01-13 07:44:29');
 
 -- --------------------------------------------------------
 
@@ -222,10 +218,11 @@ CREATE TABLE `product` (
 INSERT INTO `product` (`id`, `brand`, `type`, `slug`, `price`, `os`, `storage`, `cpu`, `ram`, `image`) VALUES
 (1, 'Apple', 'iPhone 12 Mini', 'iphone-12-mini', 12999000, 'iOS 14', '64GB', 'Apple A14 Bionic', '4GB', 'iphone-12-mini.png'),
 (2, 'Samsung', 'Galaxy Z Fold2 5G', 'galaxy-z-fold2-5g', 31990000, 'Android 10', '256GB', 'Qualcomm SM8250 Snapdragon 865+', '12GB', 'fold-2.png'),
-(3, 'Xiaomi', 'Mi 10T Pro 5G', 'mi-10t-pro', 8499000, 'Android 10', '128GB', 'Qualcomm SM8250 Snapdragon 865', '8GB', 'mi-10t-pro.png'),
+(3, 'Xiaomi', 'Mi 10T Pro 5G', 'mi-10t-pro-5g', 8499000, 'Android 10', '128GB', 'Qualcomm SM8250 Snapdragon 865', '8GB', 'mi-10t-pro.png'),
 (4, 'Apple', 'iPhone 12 Pro', 'iphone-12-pro', 18499000, 'iOS 14', '128GB', 'Apple A14 Bionic', '6GB', 'iphone-12-pro.png'),
 (5, 'Oppo', 'Reno5 Pro 5G', 'reno5-pro', 8400000, 'Android 11', '128GB', 'Mediatek MT6889Z Dimensity 1000+', '8GB', 'reno5-pro.png'),
-(7, 'Samsung', 'Galaxy Z Flip 5G', 'galaxy-z-flip-5g', 11999000, 'Android 11', '256GB', 'Qualcomm SM8250 Snapdragon 865+', '8GB', '1607924162_32de55cb7a9eaced83af.png');
+(7, 'Samsung', 'Galaxy Z Flip 5G', 'galaxy-z-flip-5g', 11999000, 'Android 11', '256GB', 'Qualcomm SM8250 Snapdragon 865+', '8GB', '1607924162_32de55cb7a9eaced83af.png'),
+(8, 'Google', 'Pixel 4 XL', 'pixel-4-xl', 10000000, 'Android 10', '128GB', 'Qualcomm SM8150 Snapdragon 855', '6GB', '1608181184_8d3553a8ffb3763f818b.png');
 
 -- --------------------------------------------------------
 
@@ -364,7 +361,7 @@ ALTER TABLE `auth_groups`
 -- AUTO_INCREMENT for table `auth_logins`
 --
 ALTER TABLE `auth_logins`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT for table `auth_permissions`
@@ -394,7 +391,7 @@ ALTER TABLE `migrations`
 -- AUTO_INCREMENT for table `product`
 --
 ALTER TABLE `product`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `users`
